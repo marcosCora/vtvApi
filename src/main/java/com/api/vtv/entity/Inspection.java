@@ -19,6 +19,7 @@ public class Inspection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idInspection;
     private Date dateInspection;
+    private String Result;
     @OneToMany
     private List<Observation> observations;
     @OneToMany
