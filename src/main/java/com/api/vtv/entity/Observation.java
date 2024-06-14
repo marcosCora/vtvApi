@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "observations")
-@PrimaryKeyJoinColumn(referencedColumnName = "fk_control")
+@PrimaryKeyJoinColumn(referencedColumnName = "idControl")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

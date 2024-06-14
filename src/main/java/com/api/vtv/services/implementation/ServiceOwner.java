@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,7 +18,6 @@ public class ServiceOwner implements IServiceOwner {
 
     @Autowired
     private IRepositoryOwnerVehicle repository;
-
     @Autowired
     private OwnerMapper mapper;
 
@@ -29,8 +30,8 @@ public class ServiceOwner implements IServiceOwner {
     }
 
     @Override
-    public OwnerDTO getOwnerById(Integer id) {
-        return repository.findById(id).map(mapper::toDTO).orElse(null);
+    public Optional<OwnerDTO> getOwnerById(Integer id)  {
+        return  repository.findById(id).map(mapper::toDTO);
     }
 
     @Override
@@ -41,16 +42,16 @@ public class ServiceOwner implements IServiceOwner {
 
     @Override
     public String updateOwner(Integer id, OwnerVehicle ownerUpdated) throws Exception{
-        OwnerVehicle ownerVehicle = repository.findById(id).orElse(null);
-        if(ownerVehicle == null){
-            throw new Exception("Not exist owner");
-        }
+        OwnerVehicle ownerVehicle = repository.findById(id).
+                                    orElseThrow(() -> new Exception("Owner not found"));
         repository.save(ownerUpdated);
         return "Owner updated";
     }
 
     @Override
-    public String deleteOwner(Integer id) {
+    public String deleteOwner(Integer id) throws Exception{
+        repository.findById(id).
+                orElseThrow(() -> new Exception("Owner not found"));
         repository.deleteById(id);
         return "Owner deleted";
     }

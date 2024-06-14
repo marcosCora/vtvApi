@@ -7,10 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "measurings")
-@PrimaryKeyJoinColumn(referencedColumnName = "fk_control")
+@PrimaryKeyJoinColumn(referencedColumnName = "idControl")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Measuring {
+public class Measuring extends Control{
     private String typeMeasuring;
 }

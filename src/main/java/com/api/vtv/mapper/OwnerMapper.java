@@ -2,10 +2,11 @@ package com.api.vtv.mapper;
 
 import com.api.vtv.dto.OwnerDTO;
 import com.api.vtv.entity.OwnerVehicle;
-import com.api.vtv.entity.Vehicle;
 
-import java.util.List;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class OwnerMapper {
 
     public OwnerDTO toDTO(OwnerVehicle owner){

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity(name = "OwnerVehicles")
-@PrimaryKeyJoinColumn(referencedColumnName = "fk_person")
+@PrimaryKeyJoinColumn(referencedColumnName = "idPerson")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
