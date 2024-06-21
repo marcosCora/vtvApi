@@ -2,15 +2,12 @@ package com.api.vtv.services.implementation;
 
 import com.api.vtv.dto.InspectionDTO;
 import com.api.vtv.entity.Inspection;
-import com.api.vtv.entity.Inspector;
 import com.api.vtv.mapper.InspectionMapper;
 import com.api.vtv.repository.IRepositoryInspection;
 import com.api.vtv.services.IServiceInspection;
-import org.hibernate.usertype.internal.AbstractTimeZoneStorageCompositeUserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.management.OperatingSystemMXBean;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,6 +36,7 @@ public class ServiceInspection implements IServiceInspection {
     @Override
     public String createInspection(Inspection inspection) {
         repository.save(inspection);
+        //crear resultado
         return "Inspection created";
 
     }
