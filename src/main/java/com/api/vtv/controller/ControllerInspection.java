@@ -19,8 +19,9 @@ public class ControllerInspection {
     private IServiceInspection service;
 
     @GetMapping
-    public ResponseEntity<List<InspectionDTO>> getAllInspection(){
-        return new ResponseEntity<>(service.getAllInspection(), HttpStatus.OK);
+    public ResponseEntity<List<Inspection>> getAllInspection(){
+        //return new ResponseEntity<>(service.getAllInspection(), HttpStatus.OK);
+        return new ResponseEntity<>(service.getAllInspectionNotDto(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

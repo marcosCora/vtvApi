@@ -29,6 +29,11 @@ public class ServiceInspection implements IServiceInspection {
     }
 
     @Override
+    public List<Inspection> getAllInspectionNotDto() {
+        return repository.findAll();
+    }
+
+    @Override
     public Optional<InspectionDTO> getInspectionById(Integer id) {
         return repository.findById(id).map(mapper::toDTO);
     }
