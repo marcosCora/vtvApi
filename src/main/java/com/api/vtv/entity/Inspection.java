@@ -20,11 +20,12 @@ public class Inspection {
     private Integer idInspection;
     private Date dateInspection;
     private String Result;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Observation> observations;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Measuring> measurings;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "fk_vehicle")
     private Vehicle vehicles;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "fk_person",

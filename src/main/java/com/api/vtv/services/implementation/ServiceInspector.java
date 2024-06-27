@@ -42,6 +42,12 @@ public class ServiceInspector implements IServiceInspector {
     }
 
     @Override
+    public String createInspectors(List<Inspector> inspector) {
+        repository.saveAll(inspector);
+        return "Inspector created";
+    }
+
+    @Override
     public String updateInspector(Integer id, Inspector inspectorUptdated) throws Exception {
         Inspector inspector = repository.findById(id).
                 orElseThrow(() -> new Exception("Inspector not found"));

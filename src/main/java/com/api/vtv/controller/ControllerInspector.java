@@ -35,6 +35,11 @@ public class ControllerInspector {
         return new ResponseEntity<>(service.createInspector(inspector), HttpStatus.OK);
     }
 
+    @PostMapping("/creatfull")
+    public ResponseEntity<String> createInspectors(@RequestBody List<Inspector> inspector){
+        return new ResponseEntity<>(service.createInspectors(inspector), HttpStatus.OK);
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateInspector(@PathVariable Integer id, @RequestBody Inspector inspector){
         ResponseEntity<String> response = null;

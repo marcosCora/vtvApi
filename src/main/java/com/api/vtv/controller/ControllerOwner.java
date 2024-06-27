@@ -34,6 +34,11 @@ public class ControllerOwner {
         return new ResponseEntity<>(service.createOwner(owner), HttpStatus.OK);
     }
 
+    @PostMapping("/creatfull")
+    public ResponseEntity<String> createOwners(@RequestBody List<OwnerVehicle> owner){
+        return new ResponseEntity<>(service.createOwners(owner), HttpStatus.OK);
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateOwner(@PathVariable Integer id, @RequestBody OwnerVehicle owner){
         ResponseEntity<String> response = null;

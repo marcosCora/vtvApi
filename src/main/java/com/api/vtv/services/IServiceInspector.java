@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface IServiceInspector {
     public List<InspectorDTO> getAllInspectors();
     public Optional<InspectorDTO> getInspectorById(Integer id);
+    public String createInspectors(List<Inspector> inspector);
     public String createInspector(Inspector inspector);
     public String updateInspector(Integer id, Inspector inspectorUptdated) throws Exception;
     public String deleteInspector(Integer id) throws Exception;

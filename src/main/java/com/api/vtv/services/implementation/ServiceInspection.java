@@ -28,6 +28,7 @@ public class ServiceInspection implements IServiceInspection {
                 .collect(Collectors.toList());
     }
 
+    //eliminar esta funcion
     @Override
     public List<Inspection> getAllInspectionNotDto() {
         return repository.findAll();

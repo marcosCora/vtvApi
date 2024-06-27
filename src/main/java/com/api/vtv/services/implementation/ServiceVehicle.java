@@ -40,6 +40,12 @@ public class ServiceVehicle implements IServiceVehicle {
     }
 
     @Override
+    public String createVehicles(List<Vehicle> vehicles) {
+        repository.saveAll(vehicles);
+        return "Vehicle created";
+    }
+
+    @Override
     public String updateVehicle(Integer id, Vehicle vehicleUpdated) throws Exception {
         Vehicle vehicle = repository.findById(id)
                 .orElseThrow(()-> new Exception("Vehicle not found"));

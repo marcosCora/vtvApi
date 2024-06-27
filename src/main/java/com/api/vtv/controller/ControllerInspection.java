@@ -18,6 +18,7 @@ public class ControllerInspection {
     @Autowired
     private IServiceInspection service;
 
+    //modificar esta funcion como deberia estar
     @GetMapping
     public ResponseEntity<List<Inspection>> getAllInspection(){
         //return new ResponseEntity<>(service.getAllInspection(), HttpStatus.OK);
@@ -33,6 +34,7 @@ public class ControllerInspection {
 
     @PostMapping("/creat")
     public ResponseEntity<String> createInspection(@RequestBody Inspection inspection){
+        System.out.println(inspection);
         return new ResponseEntity<>(service.createInspection(inspection), HttpStatus.OK);
     }
 

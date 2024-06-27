@@ -34,6 +34,11 @@ public class ControllerVehicle {
         return new ResponseEntity<>(service.createVehicle(vehicle), HttpStatus.OK);
     }
 
+    @PostMapping("/creatfull")
+    public ResponseEntity<String> createVehicles(@RequestBody List<Vehicle> vehicles){
+        return new ResponseEntity<>(service.createVehicles(vehicles), HttpStatus.OK);
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateVehicle(@PathVariable Integer id, @RequestBody Vehicle vehicle){
         ResponseEntity<String> response = null;

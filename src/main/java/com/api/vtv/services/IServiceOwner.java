@@ -11,6 +11,7 @@ public interface IServiceOwner {
     public List<OwnerDTO> getAllOwner();
     public Optional<OwnerDTO> getOwnerById(Integer id);
     public String createOwner(OwnerVehicle owner);
+    public String createOwners(List<OwnerVehicle> owner);
     public String  updateOwner(Integer id, OwnerVehicle ownerUpdated) throws Exception;
     public String deleteOwner(Integer id) throws Exception;
 

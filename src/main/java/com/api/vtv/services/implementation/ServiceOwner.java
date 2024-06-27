@@ -41,6 +41,12 @@ public class ServiceOwner implements IServiceOwner {
     }
 
     @Override
+    public String createOwners(List<OwnerVehicle> owner) {
+        repository.saveAll(owner);
+        return "Owner created";
+    }
+
+    @Override
     public String updateOwner(Integer id, OwnerVehicle ownerUpdated) throws Exception{
         OwnerVehicle ownerVehicle = repository.findById(id).
                                     orElseThrow(() -> new Exception("Owner not found"));
