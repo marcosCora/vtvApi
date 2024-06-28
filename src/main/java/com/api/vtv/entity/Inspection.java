@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Inspection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idInspection;
-    private Date dateInspection;
+    private LocalDate dateInspection;
     private String Result;
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Observation> observations;

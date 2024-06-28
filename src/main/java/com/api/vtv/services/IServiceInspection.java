@@ -14,5 +14,4 @@ public interface IServiceInspection {
     public String createInspection(Inspection inspection);
     public String updateInspection(Integer id, Inspection inspectionUpdated) throws Exception;
     public String deleteInspection(Integer id) throws Exception;
-    public List<Inspection> getAllInspectionNotDto();
 }

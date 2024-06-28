@@ -8,6 +8,8 @@ import com.api.vtv.services.IServiceInspection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,12 +30,6 @@ public class ServiceInspection implements IServiceInspection {
                 .collect(Collectors.toList());
     }
 
-    //eliminar esta funcion
-    @Override
-    public List<Inspection> getAllInspectionNotDto() {
-        return repository.findAll();
-    }
-
     @Override
     public Optional<InspectionDTO> getInspectionById(Integer id) {
         return repository.findById(id).map(mapper::toDTO);
@@ -41,6 +37,9 @@ public class ServiceInspection implements IServiceInspection {
 
     @Override
     public String createInspection(Inspection inspection) {
+        inspection.setDateInspection(LocalDate.now());
+        
+
         repository.save(inspection);
         //crear resultado
         return "Inspection created";
@@ -62,6 +61,8 @@ public class ServiceInspection implements IServiceInspection {
         repository.deleteById(id);
         return "Inspection deleted";
     }
+
+
 
 
 }

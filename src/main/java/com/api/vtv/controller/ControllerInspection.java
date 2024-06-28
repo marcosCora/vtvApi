@@ -20,9 +20,8 @@ public class ControllerInspection {
 
     //modificar esta funcion como deberia estar
     @GetMapping
-    public ResponseEntity<List<Inspection>> getAllInspection(){
-        //return new ResponseEntity<>(service.getAllInspection(), HttpStatus.OK);
-        return new ResponseEntity<>(service.getAllInspectionNotDto(), HttpStatus.OK);
+    public ResponseEntity<List<InspectionDTO>> getAllInspection(){
+        return new ResponseEntity<>(service.getAllInspection(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -34,7 +33,6 @@ public class ControllerInspection {
 
     @PostMapping("/creat")
     public ResponseEntity<String> createInspection(@RequestBody Inspection inspection){
-        System.out.println(inspection);
         return new ResponseEntity<>(service.createInspection(inspection), HttpStatus.OK);
     }
 
