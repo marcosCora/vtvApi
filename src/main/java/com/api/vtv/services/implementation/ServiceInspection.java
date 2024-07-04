@@ -38,7 +38,7 @@ public class ServiceInspection implements IServiceInspection {
     @Override
     public String createInspection(Inspection inspection) {
         inspection.setDateInspection(LocalDate.now());
-        
+
 
         repository.save(inspection);
         //crear resultado
