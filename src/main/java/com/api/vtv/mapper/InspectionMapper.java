@@ -13,9 +13,9 @@ public class InspectionMapper {
     private InspectorMapper inspectorMapper;
 
     public InspectionDTO toDTO(Inspection inspection){
-        InspectorDTO inspectorDTO = inspectorMapper.toDTO(inspection.getInspector());
+        //InspectorDTO inspectorDTO = inspectorMapper.toDTO(inspection.getInspector());
         return new InspectionDTO(inspection.getIdInspection(), inspection.getDateInspection(),
-                inspection.getResult(), inspection.getVehicles(), inspectorDTO);
+                inspection.getResult(), inspection.getVehicles().getDomain(), inspection.getInspector().getDni());
     }
 
     public Inspection toEntity(InspectionDTO inspectionDTO){
@@ -24,8 +24,8 @@ public class InspectionMapper {
         inspection.setIdInspection(inspectionDTO.getIdInspection());
         inspection.setDateInspection(inspectionDTO.getDateInspection());
         inspection.setResult(inspectionDTO.getResult());
-        inspection.setVehicles(inspectionDTO.getVehicle());
-        inspection.setInspector(inspectorMapper.toEntity(inspectionDTO.getInspector()));
+        //inspection.setVehicles(inspectionDTO.getVehicle());
+        //inspection.setInspector(inspectorMapper.toEntity(inspectionDTO.getInspector()));
         return inspection;
     }
 

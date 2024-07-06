@@ -1,7 +1,9 @@
 package com.api.vtv.services.implementation;
 
 import com.api.vtv.dto.InspectionDTO;
+import com.api.vtv.entity.Control;
 import com.api.vtv.entity.Inspection;
+import com.api.vtv.entity.Observation;
 import com.api.vtv.mapper.InspectionMapper;
 import com.api.vtv.repository.IRepositoryInspection;
 import com.api.vtv.services.IServiceInspection;
@@ -9,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,10 +39,9 @@ public class ServiceInspection implements IServiceInspection {
     @Override
     public String createInspection(Inspection inspection) {
         inspection.setDateInspection(LocalDate.now());
-
-
+        inspection = calculatedResult(inspection);
         repository.save(inspection);
-        //crear resultado
+
         return "Inspection created";
 
     }
@@ -63,6 +63,33 @@ public class ServiceInspection implements IServiceInspection {
     }
 
 
+    public Inspection calculatedResult(Inspection inspection){
+
+        String rtaObservation = calculateResulControls(inspection.getObservations());
+        String rtaMeasuring = calculateResulControls(inspection.getMeasurings());
+        if(rtaMeasuring.equalsIgnoreCase("APTO") && rtaObservation.equalsIgnoreCase("APTO")){
+            inspection.setResult("APTO");
+        }else if(rtaMeasuring.equalsIgnoreCase("RECHAZADO") || rtaObservation.equalsIgnoreCase("RECHAZADO")){
+            inspection.setResult("RECHAZADO");
+        }else {
+            inspection.setResult("CONDICIONAL");
+        }
+        return inspection;
+    }
+
+    public String calculateResulControls(List<? extends Control> control){
+        String rta = "Rechazado";
+        for (Control c : control){
+            if(c.getResult().equalsIgnoreCase("APTO")){
+                rta = "APTO";
+            } else if (c.getResult().equalsIgnoreCase("CONDICIONAL")) {
+                rta = "CONDICIONAL";
+            }else{
+                rta = "RECHAZADO";
+            }
+        }
+        return rta;
+    }
 
 
 }

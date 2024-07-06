@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -13,9 +14,9 @@ import java.util.Date;
 public class InspectionDTO {
 
     private Integer idInspection;
-    private Date dateInspection;
+    private LocalDate dateInspection;
     private String result;
-    private Vehicle vehicle;
-    private InspectorDTO inspector;
+    private String domainVehicle;
+    private String dniInspector;
 
 }
