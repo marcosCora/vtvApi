@@ -1,7 +1,6 @@
 package com.api.vtv.mapper;
 
-import com.api.vtv.dto.InspectionDTO;
-import com.api.vtv.dto.InspectorDTO;
+import com.api.vtv.dto.InputInspectionDTO;
 import com.api.vtv.entity.Inspection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,13 +11,13 @@ public class InspectionMapper {
     @Autowired
     private InspectorMapper inspectorMapper;
 
-    public InspectionDTO toDTO(Inspection inspection){
-        //InspectorDTO inspectorDTO = inspectorMapper.toDTO(inspection.getInspector());
-        return new InspectionDTO(inspection.getIdInspection(), inspection.getDateInspection(),
+    public InputInspectionDTO toDTO(Inspection inspection){
+        //InspectorDTO InputInspectionDTO = inspectorMapper.toDTO(inspection.getInspector());
+        return new InputInspectionDTO(inspection.getIdInspection(), inspection.getDateInspection(),
                 inspection.getResult(), inspection.getVehicles().getDomain(), inspection.getInspector().getDni());
     }
 
-    public Inspection toEntity(InspectionDTO inspectionDTO){
+    public Inspection toEntity(InputInspectionDTO inspectionDTO){
 
         Inspection inspection = new Inspection();
         inspection.setIdInspection(inspectionDTO.getIdInspection());

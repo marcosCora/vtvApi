@@ -1,7 +1,7 @@
 package com.api.vtv.controller;
 
-import com.api.vtv.dto.InspectionDTO;
-import com.api.vtv.dto.VehicleDTO;
+import com.api.vtv.dto.InputInspectionDTO;
+import com.api.vtv.dto.OutputInspectionDTO;
 import com.api.vtv.entity.Inspection;
 import com.api.vtv.services.IServiceInspection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,19 @@ public class ControllerInspection {
 
     //modificar esta funcion como deberia estar
     @GetMapping
-    public ResponseEntity<List<InspectionDTO>> getAllInspection(){
+    public ResponseEntity<List<InputInspectionDTO>> getAllInspection(){
         return new ResponseEntity<>(service.getAllInspection(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InspectionDTO> getInspectionById(@PathVariable Integer id){
+    public ResponseEntity<InputInspectionDTO> getInspectionById(@PathVariable Integer id){
         return service.getInspectionById(id)
                 .map(inspector -> (new ResponseEntity<>(inspector, HttpStatus.OK)))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/creat")
-    public ResponseEntity<String> createInspection(@RequestBody Inspection inspection){
+    public ResponseEntity<String> createInspection(@RequestBody OutputInspectionDTO inspection){
         return new ResponseEntity<>(service.createInspection(inspection), HttpStatus.OK);
     }
 

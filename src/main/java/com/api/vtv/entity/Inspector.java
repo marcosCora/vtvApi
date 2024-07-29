@@ -7,6 +7,7 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -15,9 +16,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Inspector extends Person{
+public class Inspector extends Person {
     private String specialty;
     @OneToMany(mappedBy = "inspector")
     @JsonIgnoreProperties(value = "inspector")
     private List<Inspection> inspections;
+
+    public String toString(){
+        return super.toString();
+    }
+
 }

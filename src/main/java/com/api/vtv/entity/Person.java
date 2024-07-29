@@ -19,4 +19,10 @@ public class Person {
     private String dni;
     private String address;
     private String phone;
+
+    public String toString(){
+        return "\nID: " + getIdPerson() +
+               "\nName: " + getName() +
+               "\nLast Name: " + getLastName();
+    }
 }

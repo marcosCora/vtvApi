@@ -1,11 +1,13 @@
 package com.api.vtv.services.implementation;
 
-import com.api.vtv.dto.InspectionDTO;
-import com.api.vtv.entity.Control;
-import com.api.vtv.entity.Inspection;
-import com.api.vtv.entity.Observation;
+import com.api.vtv.dto.InputInspectionDTO;
+
+import com.api.vtv.dto.OutputInspectionDTO;
+import com.api.vtv.entity.*;
 import com.api.vtv.mapper.InspectionMapper;
 import com.api.vtv.repository.IRepositoryInspection;
+import com.api.vtv.repository.IRepositoryInspector;
+import com.api.vtv.repository.IRepositoryVehicle;
 import com.api.vtv.services.IServiceInspection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +24,13 @@ public class ServiceInspection implements IServiceInspection {
     private IRepositoryInspection repository;
     @Autowired
     private InspectionMapper mapper;
+    @Autowired
+    private IRepositoryInspector repositoryInspector;
+    @Autowired
+    private IRepositoryVehicle repositoryVehicle;
 
     @Override
-    public List<InspectionDTO> getAllInspection() {
+    public List<InputInspectionDTO> getAllInspection() {
         return repository.findAll()
                 .stream()
                 .map(mapper::toDTO)
@@ -32,18 +38,8 @@ public class ServiceInspection implements IServiceInspection {
     }
 
     @Override
-    public Optional<InspectionDTO> getInspectionById(Integer id) {
+    public Optional<InputInspectionDTO> getInspectionById(Integer id) {
         return repository.findById(id).map(mapper::toDTO);
-    }
-
-    @Override
-    public String createInspection(Inspection inspection) {
-        inspection.setDateInspection(LocalDate.now());
-        inspection = calculatedResult(inspection);
-        repository.save(inspection);
-
-        return "Inspection created";
-
     }
 
     @Override
@@ -62,6 +58,33 @@ public class ServiceInspection implements IServiceInspection {
         return "Inspection deleted";
     }
 
+    @Override
+    public String createInspection(OutputInspectionDTO inspectionDTO) {
+        //obtengo de la base de datos el id del inspector
+        Optional<Integer> inspectorOptional = repositoryInspector.searchInspectorByDni(inspectionDTO.getDniInspector());
+        Inspector inspector = new Inspector();
+        inspector.setIdPerson((Integer) inspectorOptional.get());
+
+        //obtengo de la base de datos el id del vehicle
+        Optional<Integer> vehicleOptional = repositoryVehicle.searchVehicleByDomain(inspectionDTO.getDomainVehicle());
+        Vehicle vehicle = new Vehicle();
+        vehicle.setIdVehicle((Integer) vehicleOptional.get());
+
+        Inspection inspection = new Inspection();
+        inspection.setDateInspection(LocalDate.now());
+
+        inspection.setVehicles(vehicle);
+        inspection.setInspector(inspector);
+
+        inspection.setMeasurings(inspectionDTO.getMeasurings());
+        inspection.setObservations(inspectionDTO.getObservations());
+        inspection = calculatedResult(inspection);
+
+        repository.save(inspection);
+
+        return "Inspection created";
+
+    }
 
     public Inspection calculatedResult(Inspection inspection){
 
