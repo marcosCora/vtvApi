@@ -1,8 +1,10 @@
 package com.api.vtv.services.implementation;
 
 import com.api.vtv.dto.VehicleDTO;
+import com.api.vtv.entity.OwnerVehicle;
 import com.api.vtv.entity.Vehicle;
 import com.api.vtv.mapper.VehicleMapper;
+import com.api.vtv.repository.IRepositoryOwnerVehicle;
 import com.api.vtv.repository.IRepositoryVehicle;
 import com.api.vtv.services.IServiceVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class ServiceVehicle implements IServiceVehicle {
     private IRepositoryVehicle repository;
     @Autowired
     private VehicleMapper mapper;
+    @Autowired
+    private IRepositoryOwnerVehicle repositoryOwner;
 
     @Override
     public List<VehicleDTO> getAllVehicle() {
@@ -34,7 +38,15 @@ public class ServiceVehicle implements IServiceVehicle {
     }
 
     @Override
-    public String createVehicle(Vehicle vehicle) {
+    public String createVehicle(VehicleDTO vehicleDto) throws Exception{
+
+        Optional<Integer> idOwner = repositoryOwner.searchOwnerByDni(vehicleDto.getDniOwner());
+        OwnerVehicle owner = new OwnerVehicle();
+        owner.setIdPerson((Integer) idOwner.orElseThrow(()-> new Exception("Owner not found")));
+
+        Vehicle vehicle = mapper.toEntity(vehicleDto);
+        vehicle.setOwner(owner);
+
         repository.save(vehicle);
         return "Vehicle created";
     }

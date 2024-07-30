@@ -30,8 +30,14 @@ public class ControllerVehicle {
     }
 
     @PostMapping("/creat")
-    public ResponseEntity<String> createVehicle(@RequestBody Vehicle vehicle){
-        return new ResponseEntity<>(service.createVehicle(vehicle), HttpStatus.OK);
+    public ResponseEntity<String> createVehicle(@RequestBody VehicleDTO vehicle){
+        ResponseEntity<String> response = null;
+        try{
+            response = new ResponseEntity<>(service.createVehicle(vehicle), HttpStatus.OK);
+        }catch (Exception e){
+            response =  ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return response;
     }
 
     @PostMapping("/creatfull")

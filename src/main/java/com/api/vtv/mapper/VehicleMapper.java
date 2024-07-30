@@ -9,7 +9,7 @@ public class VehicleMapper {
 
     public VehicleDTO toDTO(Vehicle vehicle){
         return new VehicleDTO(vehicle.getIdVehicle(), vehicle.getBrand(), vehicle.getModel(),
-                    vehicle.getDomain(), vehicle.getExpirationVtv());
+                    vehicle.getDomain(), vehicle.getExpirationVtv(), vehicle.getOwner().getDni());
     }
 
     public Vehicle toEntity(VehicleDTO dto){
@@ -19,6 +19,7 @@ public class VehicleMapper {
         vehicle.setModel(dto.getModel());
         vehicle.setDomain(dto.getDomain());
         vehicle.setExpirationVtv(dto.getExpirationVtv());
+
         return vehicle;
     }
 

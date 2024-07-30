@@ -17,5 +17,6 @@ public class VehicleDTO {
     private String model;
     private String domain;
     private Date expirationVtv;
+    private String dniOwner;
 
 }
