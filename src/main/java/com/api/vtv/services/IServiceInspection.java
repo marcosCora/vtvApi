@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface IServiceInspection {
     public List<InputInspectionDTO> getAllInspection();
     public Optional<InputInspectionDTO> getInspectionById(Integer id);
-    public String createInspection(OutputInspectionDTO inspection);
+    public String createInspection(OutputInspectionDTO inspection) throws Exception;
     public String updateInspection(Integer id, Inspection inspectionUpdated) throws Exception;
     public String deleteInspection(Integer id) throws Exception;
 }

@@ -33,7 +33,14 @@ public class ControllerInspection {
 
     @PostMapping("/creat")
     public ResponseEntity<String> createInspection(@RequestBody OutputInspectionDTO inspection){
-        return new ResponseEntity<>(service.createInspection(inspection), HttpStatus.OK);
+        ResponseEntity<String> response = null;
+        try{
+            response = new ResponseEntity<>(service.createInspection(inspection), HttpStatus.OK);
+        }catch (Exception e){
+            response = ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return response;
     }
 
     @PutMapping("/update/{id}")

@@ -9,12 +9,16 @@ import com.api.vtv.repository.IRepositoryVehicle;
 import com.api.vtv.services.IServiceVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ServiceVehicle implements IServiceVehicle {
 
     @Autowired
@@ -72,4 +76,12 @@ public class ServiceVehicle implements IServiceVehicle {
         repository.deleteById(id);
         return "Vehicle deleted";
     }
+
+    @Override
+    public  void setFechaExpiration(Integer id){
+        LocalDate fecha = LocalDate.now().plusYears(1);
+        int response = repository.setFechaExpiration(fecha, id);
+        //System.out.printf(response);
+    }
+
 }

@@ -25,6 +25,9 @@ public class ServiceInspection implements IServiceInspection {
     @Autowired
     private InspectionMapper mapper;
     @Autowired
+    private ServiceVehicle serviceVehicle;
+    //modificar las responsabilidades
+    @Autowired
     private IRepositoryInspector repositoryInspector;
     @Autowired
     private IRepositoryVehicle repositoryVehicle;
@@ -59,16 +62,18 @@ public class ServiceInspection implements IServiceInspection {
     }
 
     @Override
-    public String createInspection(OutputInspectionDTO inspectionDTO) {
+    public String createInspection(OutputInspectionDTO inspectionDTO) throws Exception {
         //obtengo de la base de datos el id del inspector
         Optional<Integer> inspectorOptional = repositoryInspector.searchInspectorByDni(inspectionDTO.getDniInspector());
         Inspector inspector = new Inspector();
-        inspector.setIdPerson((Integer) inspectorOptional.get());
+        inspector.setIdPerson((Integer) inspectorOptional.orElseThrow(()->
+                                            new Exception("Inspector not found")));
 
         //obtengo de la base de datos el id del vehicle
         Optional<Integer> vehicleOptional = repositoryVehicle.searchVehicleByDomain(inspectionDTO.getDomainVehicle());
         Vehicle vehicle = new Vehicle();
-        vehicle.setIdVehicle((Integer) vehicleOptional.get());
+        vehicle.setIdVehicle((Integer) vehicleOptional.orElseThrow(()->
+                                        new Exception("Vehicle not found")));
 
         Inspection inspection = new Inspection();
         inspection.setDateInspection(LocalDate.now());
@@ -92,6 +97,7 @@ public class ServiceInspection implements IServiceInspection {
         String rtaMeasuring = calculateResulControls(inspection.getMeasurings());
         if(rtaMeasuring.equalsIgnoreCase("APTO") && rtaObservation.equalsIgnoreCase("APTO")){
             inspection.setResult("APTO");
+            serviceVehicle.setFechaExpiration(inspection.getVehicles().getIdVehicle());
         }else if(rtaMeasuring.equalsIgnoreCase("RECHAZADO") || rtaObservation.equalsIgnoreCase("RECHAZADO")){
             inspection.setResult("RECHAZADO");
         }else {
