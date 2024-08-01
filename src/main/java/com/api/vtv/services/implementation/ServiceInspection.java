@@ -9,6 +9,8 @@ import com.api.vtv.repository.IRepositoryInspection;
 import com.api.vtv.repository.IRepositoryInspector;
 import com.api.vtv.repository.IRepositoryVehicle;
 import com.api.vtv.services.IServiceInspection;
+import com.api.vtv.services.IServiceInspector;
+import com.api.vtv.services.IServiceVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +28,8 @@ public class ServiceInspection implements IServiceInspection {
     private InspectionMapper mapper;
     @Autowired
     private ServiceVehicle serviceVehicle;
-    //modificar las responsabilidades
     @Autowired
-    private IRepositoryInspector repositoryInspector;
-    @Autowired
-    private IRepositoryVehicle repositoryVehicle;
+    private IServiceInspector serviceInspector;
 
     @Override
     public List<InputInspectionDTO> getAllInspection() {
@@ -64,16 +63,10 @@ public class ServiceInspection implements IServiceInspection {
     @Override
     public String createInspection(OutputInspectionDTO inspectionDTO) throws Exception {
         //obtengo de la base de datos el id del inspector
-        Optional<Integer> inspectorOptional = repositoryInspector.searchInspectorByDni(inspectionDTO.getDniInspector());
-        Inspector inspector = new Inspector();
-        inspector.setIdPerson((Integer) inspectorOptional.orElseThrow(()->
-                                            new Exception("Inspector not found")));
+        Inspector inspector = serviceInspector.getInspectorByDni(inspectionDTO.getDniInspector());
 
         //obtengo de la base de datos el id del vehicle
-        Optional<Integer> vehicleOptional = repositoryVehicle.searchVehicleByDomain(inspectionDTO.getDomainVehicle());
-        Vehicle vehicle = new Vehicle();
-        vehicle.setIdVehicle((Integer) vehicleOptional.orElseThrow(()->
-                                        new Exception("Vehicle not found")));
+        Vehicle vehicle = serviceVehicle.getVehicleByDomain(inspectionDTO.getDomainVehicle());
 
         Inspection inspection = new Inspection();
         inspection.setDateInspection(LocalDate.now());

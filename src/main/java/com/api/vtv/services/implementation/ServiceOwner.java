@@ -61,4 +61,13 @@ public class ServiceOwner implements IServiceOwner {
         repository.deleteById(id);
         return "Owner deleted";
     }
+
+    @Override
+    public OwnerVehicle getOwnerByDni(String dni) throws Exception{
+        Optional<Integer> idOwner = repository.searchOwnerByDni(dni);
+        OwnerVehicle owner = new OwnerVehicle();
+        owner.setIdPerson((Integer) idOwner.orElseThrow(()-> new Exception("Owner not found")));
+        return owner;
+    }
+
 }

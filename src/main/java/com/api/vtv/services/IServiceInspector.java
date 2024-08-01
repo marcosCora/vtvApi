@@ -16,5 +16,5 @@ public interface IServiceInspector {
     public String createInspector(Inspector inspector);
     public String updateInspector(Integer id, Inspector inspectorUptdated) throws Exception;
     public String deleteInspector(Integer id) throws Exception;
-
+    public Inspector getInspectorByDni(String dni) throws Exception;
 }

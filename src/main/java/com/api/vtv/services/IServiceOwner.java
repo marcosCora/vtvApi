@@ -14,5 +14,5 @@ public interface IServiceOwner {
     public String createOwners(List<OwnerVehicle> owner);
     public String  updateOwner(Integer id, OwnerVehicle ownerUpdated) throws Exception;
     public String deleteOwner(Integer id) throws Exception;
-
+    public OwnerVehicle getOwnerByDni(String dni) throws Exception;
 }

@@ -17,5 +17,6 @@ public interface IServiceVehicle {
     public String updateVehicle(Integer id, Vehicle vehicleUpdated) throws Exception;
     public String deleteVehicle(Integer id) throws Exception;
     public  void setFechaExpiration(Integer id);
+    public Vehicle getVehicleByDomain(String domain) throws Exception;
 
 }

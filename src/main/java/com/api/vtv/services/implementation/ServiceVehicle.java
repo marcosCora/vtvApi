@@ -6,6 +6,7 @@ import com.api.vtv.entity.Vehicle;
 import com.api.vtv.mapper.VehicleMapper;
 import com.api.vtv.repository.IRepositoryOwnerVehicle;
 import com.api.vtv.repository.IRepositoryVehicle;
+import com.api.vtv.services.IServiceOwner;
 import com.api.vtv.services.IServiceVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class ServiceVehicle implements IServiceVehicle {
     @Autowired
     private VehicleMapper mapper;
     @Autowired
-    private IRepositoryOwnerVehicle repositoryOwner;
+    private IServiceOwner serviceOwner;
 
     @Override
     public List<VehicleDTO> getAllVehicle() {
@@ -44,9 +45,7 @@ public class ServiceVehicle implements IServiceVehicle {
     @Override
     public String createVehicle(VehicleDTO vehicleDto) throws Exception{
 
-        Optional<Integer> idOwner = repositoryOwner.searchOwnerByDni(vehicleDto.getDniOwner());
-        OwnerVehicle owner = new OwnerVehicle();
-        owner.setIdPerson((Integer) idOwner.orElseThrow(()-> new Exception("Owner not found")));
+        OwnerVehicle owner = serviceOwner.getOwnerByDni(vehicleDto.getDniOwner());
 
         Vehicle vehicle = mapper.toEntity(vehicleDto);
         vehicle.setOwner(owner);
@@ -81,7 +80,15 @@ public class ServiceVehicle implements IServiceVehicle {
     public  void setFechaExpiration(Integer id){
         LocalDate fecha = LocalDate.now().plusYears(1);
         int response = repository.setFechaExpiration(fecha, id);
-        //System.out.printf(response);
+    }
+
+    @Override
+    public Vehicle getVehicleByDomain(String domain) throws Exception{
+        Optional<Integer> vehicleOptional = repository.searchVehicleByDomain(domain);
+        Vehicle vehicle = new Vehicle();
+        vehicle.setIdVehicle((Integer) vehicleOptional.orElseThrow(()->
+                new Exception("Vehicle not found")));
+        return vehicle;
     }
 
 }

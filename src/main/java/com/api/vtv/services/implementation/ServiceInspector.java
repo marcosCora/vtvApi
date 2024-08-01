@@ -62,4 +62,13 @@ public class ServiceInspector implements IServiceInspector {
         repository.deleteById(id);
         return "Inspector deleted";
     }
+
+    @Override
+    public Inspector getInspectorByDni(String dni) throws Exception{
+        Optional<Integer> inspectorOptional = repository.searchInspectorByDni(dni);
+        Inspector inspector = new Inspector();
+        inspector.setIdPerson((Integer) inspectorOptional.orElseThrow(()->
+                new Exception("Inspector not found")));
+        return inspector;
+    }
 }
